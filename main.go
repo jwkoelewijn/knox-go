@@ -25,12 +25,22 @@ func main() {
 
 	wg.Wait()
 
+	sum := 0
+	spare := 0
+	var spares []int
 	for _, agent := range agents {
 		log.Println(agent.String())
+		solution := agent.Solution
+		sum += solution.Value()
+		leftOver := solution.LeftOver()
+		spare += leftOver
+		spares = append(spares, leftOver)
 		// kan niet, bij de 3e is de eerste al disconnected, duh
 		//agent.Message(agent.Whistleblower, "done")
 		agent.Disconnect()
 	}
+	log.Printf("Spares: %+v", spares)
+	log.Printf("Total value of solutions: %d, total bandwidth to spare: %d", sum, spare)
 }
 
 func agent(channel chan Agent, wg *sync.WaitGroup) {
