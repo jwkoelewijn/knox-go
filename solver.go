@@ -94,10 +94,7 @@ func handleResult(result, d DocumentList, bandwidth int, solutionChannel chan<- 
 }
 
 func maximizeSolution(sol *Solution) {
-	descendingRatio := func(d1, d2 *Document) bool {
-		return d1.SecrecyRatio > d2.SecrecyRatio
-	}
-	By(descendingRatio).Sort(sol.Pool)
+	sol.Pool.SortByDescendingRatio()
 
 	for sol.Cost < sol.Bandwidth {
 		newDoc, err := findFittingDocument(sol.Documents, sol.Pool, sol.Bandwidth-sol.Cost)
