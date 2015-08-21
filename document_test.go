@@ -37,8 +37,7 @@ func TestUnmarshal(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		var d Document
-		err := d.Unmarshal(testCase.input)
+		d, err := ParseDocument(testCase.input)
 		if (err == nil) != !testCase.errored {
 			t.Errorf("Expected Unmarshal('%s') to error where it didn't or the other way around", testCase.input)
 		}

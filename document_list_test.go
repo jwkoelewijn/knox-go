@@ -14,8 +14,7 @@ func TestCost(t *testing.T) {
 
 	docList := NewDocumentList()
 	for _, tc := range testCases {
-		var d Document
-		err := d.Unmarshal(tc.input)
+		d, err := ParseDocument(tc.input)
 		if err != nil {
 			t.Errorf("Should not error on input '%s'", tc.input)
 		}

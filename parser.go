@@ -89,8 +89,8 @@ func (p *Parser) ParseList() {
 	for p.agent.Length() < 10 && p.Scan() {
 		line := p.Text()
 		if strings.Index(line, "list") > 0 {
-			doc := Document{}
-			if err := doc.Unmarshal(line); err != nil {
+			doc, err := ParseDocument(line)
+			if err != nil {
 				panic(err)
 			}
 			p.agent.AddDocument(doc)
