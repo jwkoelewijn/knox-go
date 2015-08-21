@@ -94,10 +94,10 @@ func handleResult(result, d DocumentList, bandwidth int, solutionChannel chan<- 
 }
 
 func maximizeSolution(sol *Solution) {
-	descendingSize := func(d1, d2 *Document) bool {
-		return d1.Size > d2.Size
+	descendingRatio := func(d1, d2 *Document) bool {
+		return d1.SecrecyRatio > d2.SecrecyRatio
 	}
-	By(descendingSize).Sort(sol.Pool)
+	By(descendingRatio).Sort(sol.Pool)
 
 	for sol.Cost < sol.Bandwidth {
 		newDoc, err := findFittingDocument(sol.Documents, sol.Pool, sol.Bandwidth-sol.Cost)
@@ -109,11 +109,21 @@ func maximizeSolution(sol *Solution) {
 	}
 }
 
-func findFittingDocument(docs, pool DocumentList, maxSize int) (d Document, err error) {
+func findFittingDocument(docs, pool DocumentList, maxSize int) (Document, error) {
+	bestSecrecy := 0.0
+	found := false
+	var bestDoc Document
 	for _, d := range pool {
 		if d.Size < maxSize && !docs.Contains(d) {
-			return d, nil
+			if d.SecrecyRatio > bestSecrecy {
+				bestDoc = d
+				found = true
+			}
 		}
 	}
-	return d, fmt.Errorf("Could not find fitting document")
+	if found {
+		return bestDoc, nil
+	} else {
+		return bestDoc, fmt.Errorf("Could not find fitting document")
+	}
 }
