@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -58,36 +59,32 @@ func TestUnmarshal(t *testing.T) {
 func TestCombinations(t *testing.T) {
 	docList := NewDocumentList()
 
-	for i := 1; i <= 10; i += 1 {
-		docList = docList.Add(Document{Name: fmt.Sprintf("Document %d", 10-i), Size: i, Value: 10 - i, SecrecyRatio: float64(10-i) / float64(i)})
-	}
-
-	//name := func(d1, d2 *Document) bool {
-	//	return d1.Name < d2.Name
-	//}
-
-	secrecyRatio := func(d1, d2 *Document) bool {
-		return d1.SecrecyRatio < d2.SecrecyRatio
-	}
-
-	secrecyRatioReverse := func(d1, d2 *Document) bool {
-		return !secrecyRatio(d1, d2)
+	size := 10
+	for i := 1; i <= size; i += 1 {
+		value := rand.Intn(size)
+		docList = docList.Add(Document{Name: fmt.Sprintf("Document %d", 10-i), Size: i, Value: value, SecrecyRatio: float64(value) / float64(i)})
 	}
 
 	fmt.Println("docList:")
 	fmt.Println(docList)
 
-	By(secrecyRatio).Sort(*docList)
+	docList.SortByName()
+	fmt.Println("docList (by Name):")
+	fmt.Println(docList)
 
-	fmt.Println("docList:")
+	docList.SortBySize()
+	fmt.Println("docList (by Size):")
 	fmt.Println(docList)
-	By(secrecyRatioReverse).Sort(*docList)
-	fmt.Println("docList:")
+
+	docList.SortByDescendingValue()
+	fmt.Println("docList (by Descending Value):")
 	fmt.Println(docList)
-	fmt.Println("--------------- length 1")
-	//docList.Combinations(1)
-	fmt.Println("--------------- length 2")
-	//docList.Combinations(2)
-	fmt.Println("--------------- length 3")
-	//docList.Combinations(3)
+
+	docList.SortByRatio()
+	fmt.Println("docList: (by Ratio)")
+	fmt.Println(docList)
+
+	docList.SortByDescendingRatio()
+	fmt.Println("docList: (by Descending Ratio)")
+	fmt.Println(docList)
 }
