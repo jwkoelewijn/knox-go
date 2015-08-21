@@ -110,7 +110,6 @@ func maximizeSolution(sol *Solution) {
 }
 
 func findFittingDocument(docs, pool DocumentList, maxSize int) (d Document, err error) {
-
 	for _, d := range pool {
 		if d.Size < maxSize && !docs.Contains(d) {
 			return d, nil
