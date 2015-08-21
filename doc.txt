@@ -1,0 +1,25 @@
+/help
+   help -- |  Usage:
+   help -- |
+   help -- |     /[cmd] [arguments]
+   help -- |
+   help -- |  Available commands:
+   help -- |
+   help -- |    /msg [to] [text]         send message to coworker
+   help -- |    /list                    look at files you have access to
+   help -- |    /send [to] [filename]    move file to coworker
+   help -- |    /look                    show coworkers
+
+/list
+   list -- | Remaining Bandwidth:  9123 KB
+   list -- |                           Name     Size Secrecy Value
+   list -- |                 ONSLaptops.cer    388KB            96
+   list -- |                 VelosRumors.go    894KB            15
+   list -- |           EncryptedBuilder.txt   2130KB            12
+   list -- |          LowlandsPasswords.log    369KB             9
+   list -- |              CriminalKeys.java    782KB            76
+   list -- |                    ONSKeys.xls    498KB            76
+   list -- |                   KittenLog.rb    893KB             3
+   list -- |              ONSPasswords.java    141KB            49
+   list -- |                UserFactory.txt   1580KB            29
+   list -- |           LowlandsScandals.doc    549KB            68
