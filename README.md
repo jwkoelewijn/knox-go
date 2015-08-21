@@ -38,6 +38,8 @@ The agent then sends each of the documents in the solution and finishes by sendi
 3. Select the solution with the highest Value.
 
 ## Goroutines
+A total of 34 goroutines are used; 1 main, 1 for each agent, 10 solution generators per agent, 1 solution combinator per agent.
+
 ### Agent
 Each agent is implemented as a goroutine, with the main process waiting for each of them to finish.
 
