@@ -13,11 +13,7 @@ func NewSolution(documents, pool DocumentList, bandwidth int) Solution {
 }
 
 func (s Solution) Value() int {
-	sum := 0
-	for _, doc := range s.Documents {
-		sum += doc.Value
-	}
-	return sum
+	return s.Documents.Value()
 }
 
 func (s Solution) LeftOver() int {
