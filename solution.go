@@ -19,3 +19,7 @@ func (s Solution) Value() int {
 	}
 	return sum
 }
+
+func (s Solution) LeftOver() int {
+	return s.Bandwidth - s.Cost
+}
