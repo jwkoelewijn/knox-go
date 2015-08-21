@@ -104,17 +104,17 @@ func maximizeSolution(sol *Solution) {
 		if err != nil {
 			break
 		}
-		sol.Documents = append(sol.Documents, *newDoc)
+		sol.Documents = append(sol.Documents, newDoc)
 		sol.Cost += newDoc.Size
 	}
 }
 
-func findFittingDocument(docs, pool DocumentList, maxSize int) (*Document, error) {
+func findFittingDocument(docs, pool DocumentList, maxSize int) (d Document, err error) {
 
-	for _, doc := range pool {
-		if doc.Size < maxSize && !docs.Contains(doc) {
-			return &doc, nil
+	for _, d := range pool {
+		if d.Size < maxSize && !docs.Contains(d) {
+			return d, nil
 		}
 	}
-	return nil, fmt.Errorf("Could not find fitting document")
+	return d, fmt.Errorf("Could not find fitting document")
 }
