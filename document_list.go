@@ -58,12 +58,28 @@ func (d DocumentList) Contains(doc Document) bool {
 	return false
 }
 
-func (d *DocumentList) Cost() int {
-	sum := 0
-	for _, doc := range *d {
-		sum += doc.Size
+type Summer func(d Document) int
+
+func (sum Summer) Sum(dl *DocumentList) int {
+	s := 0
+	for _, doc := range *dl {
+		s += sum(doc)
 	}
-	return sum
+	return s
+}
+
+func (d *DocumentList) Cost() int {
+	byCost := func(doc Document) int {
+		return doc.Size
+	}
+	return Summer(byCost).Sum(d)
+}
+
+func (d *DocumentList) Value() int {
+	byValue := func(doc Document) int {
+		return doc.Value
+	}
+	return Summer(byValue).Sum(d)
 }
 
 func (d DocumentList) String() string {
