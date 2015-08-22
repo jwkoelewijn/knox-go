@@ -97,30 +97,11 @@ func maximizeSolution(sol *Solution) {
 	sol.Pool.SortByDescendingRatio()
 
 	for sol.Cost < sol.Bandwidth {
-		newDoc, err := findFittingDocument(sol.Documents, sol.Pool, sol.LeftOver())
+		newDoc, err := sol.findFittingDocument()
 		if err != nil {
 			break
 		}
 		sol.Documents = append(sol.Documents, newDoc)
 		sol.Cost += newDoc.Size
-	}
-}
-
-func findFittingDocument(docs, pool DocumentList, maxSize int) (Document, error) {
-	bestSecrecy := 0.0
-	found := false
-	var bestDoc Document
-	for _, d := range pool {
-		if d.Size < maxSize && !docs.Contains(d) {
-			if d.SecrecyRatio > bestSecrecy {
-				bestDoc = d
-				found = true
-			}
-		}
-	}
-	if found {
-		return bestDoc, nil
-	} else {
-		return bestDoc, fmt.Errorf("Could not find fitting document")
 	}
 }

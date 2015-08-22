@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Solution struct {
 	Documents DocumentList
 	Cost      int
@@ -18,4 +20,24 @@ func (s Solution) Value() int {
 
 func (s Solution) LeftOver() int {
 	return s.Bandwidth - s.Cost
+}
+
+func (sol Solution) findFittingDocument() (Document, error) {
+	maxSize := sol.LeftOver()
+	bestSecrecy := 0.0
+	found := false
+	var bestDoc Document
+	for _, d := range sol.Pool {
+		if d.Size < maxSize && !sol.Documents.Contains(d) {
+			if d.SecrecyRatio > bestSecrecy {
+				bestDoc = d
+				found = true
+			}
+		}
+	}
+	if found {
+		return bestDoc, nil
+	} else {
+		return bestDoc, fmt.Errorf("Could not find fitting document")
+	}
 }
