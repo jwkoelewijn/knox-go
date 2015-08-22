@@ -89,19 +89,6 @@ func combinations(d DocumentList, k, bandwidth int, solutionChannel chan<- Solut
 
 func handleResult(result, d DocumentList, bandwidth int, solutionChannel chan<- Solution) {
 	sol := NewSolution(result, d, bandwidth)
-	maximizeSolution(&sol)
+	sol.Maximize()
 	solutionChannel <- sol
-}
-
-func maximizeSolution(sol *Solution) {
-	sol.Pool.SortByDescendingRatio()
-
-	for sol.Cost < sol.Bandwidth {
-		newDoc, err := sol.findFittingDocument()
-		if err != nil {
-			break
-		}
-		sol.Documents = append(sol.Documents, newDoc)
-		sol.Cost += newDoc.Size
-	}
 }

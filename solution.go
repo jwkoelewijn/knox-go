@@ -22,6 +22,19 @@ func (s Solution) LeftOver() int {
 	return s.Bandwidth - s.Cost
 }
 
+func (sol *Solution) Maximize() {
+	sol.Pool.SortByDescendingRatio()
+
+	for sol.Cost < sol.Bandwidth {
+		newDoc, err := sol.findFittingDocument()
+		if err != nil {
+			break
+		}
+		sol.Documents = append(sol.Documents, newDoc)
+		sol.Cost += newDoc.Size
+	}
+}
+
 func (sol Solution) findFittingDocument() (Document, error) {
 	maxSize := sol.LeftOver()
 	bestSecrecy := 0.0
