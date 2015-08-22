@@ -97,7 +97,7 @@ func maximizeSolution(sol *Solution) {
 	sol.Pool.SortByDescendingRatio()
 
 	for sol.Cost < sol.Bandwidth {
-		newDoc, err := findFittingDocument(sol.Documents, sol.Pool, sol.Bandwidth-sol.Cost)
+		newDoc, err := findFittingDocument(sol.Documents, sol.Pool, sol.LeftOver())
 		if err != nil {
 			break
 		}
